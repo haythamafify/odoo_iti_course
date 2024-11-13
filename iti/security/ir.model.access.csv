@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_iti,access_iti,model_iti,base.group_user,1,1,1,1
+access_father,access_father,model_father,base.group_user,1,1,1,1
+access_son,access_son,model_son,base.group_user,1,1,1,1
+

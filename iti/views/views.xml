@@ -1,0 +1,134 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+        <record model="ir.ui.view" id="iti.list">
+            <field name="name">iti list</field>
+            <field name="model">iti</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" string="الاسم "/>
+                    <field name="state" string="الحاله"/>
+                    <field name="value" string="القيمه"/>
+                    <field name="value2" string="القيمه الثانيه"/>
+                    <field name="value3" string="القيمه الثالثه"/>
+                    <field name="value4" string="القيمه الرابعه"/>
+                    <field name="degree" string="الدرجه"/>
+                    <field name="description" string="الوصف"/>
+                </tree>
+            </field>
+        </record>
+        <!-- explicit form view definition -->
+        <record model="ir.ui.view" id="iti_form_view">
+            <field name="name">iti form view</field>
+            <field name="model">iti</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_confirm" string="Confirm" type="object" state="new"
+                                class="btn btn-primary"/>
+                        <button name="action_graduate" string="Graduate" type="object" state="graduate"
+                                class="btn btn-primary"/>
+
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name" string="الاسم "/>
+                        </group>
+                        <notebook>
+                            <page string="Basic info">
+                                <group>
+                                    <field name="description" string="الوصف"/>
+                                </group>
+                            </page>
+                            <page string="original info">
+                                <group>
+                                    <field name="value2" string="القيمه الثانيه"/>
+                                </group>
+
+                            </page>
+                            <page string="القيمه">
+                                <group>
+                                    <field name="value" string="القيمه"/>
+                                    <field name="value2" string="القيمه الثانيه"/>
+                                    <field name="value3" string="القيمه الثالثه"/>
+                                    <field name="value4" string="القيمه الرابعه"/>
+                                    <field name="degree" string="الدرجه"/>
+
+                                </group>
+                            </page>
+                            <page string="state">
+                                <field name="state"/>
+
+                            </page>
+
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+
+        <record model="ir.actions.act_window" id="iti_action_window">
+            <field name="name">iti window</field>
+            <field name="res_model">iti</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- actions opening views on models father -->
+
+        <record model="ir.actions.act_window" id="father_action_window">
+            <field name="name">Father window</field>
+            <field name="res_model">father</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- actions opening views on models son -->
+
+        <record model="ir.actions.act_window" id="son_action_window">
+            <field name="name">Son window</field>
+            <field name="res_model">son</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- server action to the one above -->
+
+        <record model="ir.actions.server" id="iti_action_server">
+            <field name="name">iti server</field>
+            <field name="model_id" ref="model_iti"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = {
+                "type": "ir.actions.act_window",
+                "view_mode": "tree,form",
+                "res_model": model._name,
+                }
+            </field>
+        </record>
+
+
+        <!-- Top menu item -->
+
+        <menuitem name="iti" id="iti_menu_root"/>
+
+        <!-- menu categories -->
+
+        <menuitem name="Menu 1" id="iti_menu_1" parent="iti_menu_root"/>
+        <menuitem name="Menu 2" id="iti_menu_2" parent="iti_menu_root"/>
+        <menuitem name="Father and Sons" id="father_sons" parent="iti_menu_root"/>
+
+        <!-- actions -->
+
+        <menuitem name="List" id="iti_menu_1_list" parent="iti_menu_1"
+                  action="iti_action_window"/>
+        <menuitem name="Server to list" id="iti" parent="iti_menu_2"
+                  action="iti_action_server"/>
+        <menuitem name="Father" id="father_menu" parent="father_sons"
+                  action="father_action_window"/>
+        <menuitem name="Sons" id="son_menu" parent="father_sons"
+                  action="son_action_window"/>
+    </data>
+</odoo>
